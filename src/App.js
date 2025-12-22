@@ -175,8 +175,8 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
           )}
         </div>
 
-        <div className="p-4 flex flex-col h-full w-1/2 md:w-full" style={{ minHeight: '280px' }}>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+        <div className="p-3 md:p-4 flex flex-col h-full w-1/2 md:w-full" style={{ minHeight: '280px' }}>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
 
           <div className="mb-2">
             {conditionStyle.hasShimmer ? (
@@ -263,7 +263,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
   </div>
 </div>
   <a 
-  href={`sms:+13057814612?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+  href={`sms:+17868637769?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
   onClick={(e) => e.stopPropagation()}
   className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap flex-shrink-0 text-center"
 >
@@ -509,7 +509,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
       </div>
 
       <a 
-  href={`sms:+13057814612?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+  href={`sms:+17868637769?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
   className="w-full bg-[#1f2937] text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#374151] transition-all duration-200 shadow-lg hover:shadow-xl mt-auto block text-center"
 >
   Buy Now
