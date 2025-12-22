@@ -91,8 +91,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 
   return (
     <>
-      <div ref={cardRef} className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full ${showDetailsModal ? 'opacity-0' : ''}`}>
-        <div 
+<div ref={cardRef} className={`relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave ${showDetailsModal ? 'opacity-0' : ''}`}>        <div 
   className="relative bg-gray-100 overflow-hidden group md:rounded-t-lg rounded-l-lg cursor-pointer w-1/2 md:w-full flex-shrink-0" 
   style={{ paddingBottom: '100%' }}
           onTouchStart={onTouchStart}
