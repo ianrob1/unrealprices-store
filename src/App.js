@@ -643,22 +643,8 @@ const AirtableStore = () => {
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
-  .card-wave {
+  ..card-wave {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-wave::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
-  z-index: 1;
-}
-.card-wave:hover::before {
-  left: 100%;
 }
 .card-wave:hover {
   transform: translateY(-8px) scale(1.02);
