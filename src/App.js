@@ -348,8 +348,8 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
       setCardRect(null);
     }}
   >
-    <div 
-      className="bg-white rounded-2xl overflow-hidden relative shadow-2xl"
+    <div
+  className="bg-white rounded-xl overflow-auto relative"
       style={{
         position: 'fixed',
         top: cardRect ? `${cardRect.top}px` : '50%',
@@ -375,9 +375,9 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     <X size={24} />
   </button>
   
-  <div className="flex flex-col md:flex-row gap-6 p-6">
-    <div className="md:w-1/2">
-  <div className="bg-white bg-opacity-20 backdrop-blur-md p-4 rounded-xl sticky top-6 border border-white border-opacity-30 shadow-lg">
+  <div className="flex flex-col md:flex-row gap-6 pt-0 px-6 pb-6 md:p-6">
+    <div className="md:w-1/2 -mx-6 md:mx-0 mb-6 md:mb-0">
+  <div className="bg-white bg-opacity-20 backdrop-blur-md md:p-4 p-0 rounded-b-xl md:rounded-xl sticky top-6 md:border border-white border-opacity-30 md:shadow-lg">
     {/* Main Image */}
     <div 
       className="relative overflow-hidden group cursor-pointer mb-3" 
@@ -446,7 +446,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 </div>
 
     <div className="md:w-1/2 flex flex-col">
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h2>
+      <h2 className="text-xl md:text-3xl font-bold text-gray-900 mb-4">{product.name}</h2>
       
       <div className="mb-4">
         <span 
