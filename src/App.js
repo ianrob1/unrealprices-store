@@ -91,14 +91,27 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 
   return (
     <>
-<div ref={cardRef} className={`relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave ${showDetailsModal ? 'opacity-0' : ''}`}>        <div 
+<div 
+  ref={cardRef} 
+  className={`relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave cursor-pointer ${showDetailsModal ? 'opacity-0' : ''}`}
+  onClick={(e) => {
+    if (cardRef.current) {
+      setCardRect(cardRef.current.getBoundingClientRect());
+    }
+    setShowDetailsModal(true);
+  }}
+>
+<div 
   className="relative bg-gray-100 overflow-hidden group md:rounded-t-lg rounded-l-lg cursor-pointer w-1/2 md:w-full flex-shrink-0" 
   style={{ paddingBottom: '100%' }}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onClick={() => openLightbox(currentImageIndex)}
-        >
+  onTouchStart={onTouchStart}
+  onTouchMove={onTouchMove}
+  onTouchEnd={onTouchEnd}
+  onClick={(e) => {
+    e.stopPropagation();
+    openLightbox(currentImageIndex);
+  }}
+>
           <div 
             className="absolute inset-0 flex transition-transform duration-500 ease-out" 
             style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
@@ -248,7 +261,9 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     <p className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
   </div>
 </div>
-  <button className="bg-gray-900 text-white px-4 md:px-6 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-semibold hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap flex-shrink-0">
+  <button
+  onClick={(e) => e.stopPropagation()} 
+  className="bg-gray-900 text-white px-4 md:px-6 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-semibold hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap flex-shrink-0">
     Buy Now
   </button>
 </div>
