@@ -234,7 +234,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 )}
           </div>
 
-          <div className="mb-2 flex-grow">
+          <div className="mb-2 flex-grow hidden md:block">
   <p className="text-base text-gray-600 leading-relaxed line-clamp-3">
     {product.description}
   </p>
@@ -267,11 +267,11 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
   onClick={(e) => e.stopPropagation()}
   className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap flex-shrink-0 text-center"
 >
-  Buy Now
-</a>
+        Buy Now
+      </a>
+    </div>
+  </div>
 </div>
-        </div>
-      </div>
 
       {isLightboxOpen && (
         <div 
