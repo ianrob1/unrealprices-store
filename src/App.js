@@ -362,7 +362,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
           
           <div className="space-y-4">
             <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-4 shadow-md">
-              <div className="relative bg-gray-100 rounded-xl overflow-hidden" style={{ height: '400px' }}>
+              <div className="relative bg-gray-100 rounded-xl overflow-hidden group" style={{ height: '400px' }}>
                 <img
                   src={images[currentImageIndex]}
                   alt={`${product.name} - Image ${currentImageIndex + 1}`}
@@ -376,7 +376,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
                         e.stopPropagation();
                         prevImage(e);
                       }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 z-10"
                     >
                       <ChevronLeft className="text-gray-800" size={24} />
                     </button>
@@ -386,7 +386,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
                         e.stopPropagation();
                         nextImage(e);
                       }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 z-10"
                     >
                       <ChevronRight className="text-gray-800" size={24} />
                     </button>
