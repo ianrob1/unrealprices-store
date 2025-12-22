@@ -102,7 +102,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
   }}
 >
 <div 
-  className="relative overflow-hidden group cursor-pointer w-full flex-shrink-0" 
+  className="relative overflow-hidden group cursor-pointer w-full flex-shrink-0 bg-gray-900" 
   style={{ paddingBottom: '100%' }}
   onTouchStart={onTouchStart}
   onTouchMove={onTouchMove}
@@ -175,102 +175,117 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
           )}
         </div>
 
-        <div className="p-3 md:p-4 flex flex-col h-full w-1/2 md:w-full" style={{ minHeight: '280px' }}>
-          <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+        <div className="p-4 flex flex-col md:flex-col h-full w-full">
+  <div className="flex justify-between gap-4">
+    {/* Left side - Title and specs */}
+    <div className="flex-1">
+      <h3 className="text-xl md:text-xl font-semibold text-gray-900 mb-3">{product.name}</h3>
+      
+      <div className="mb-3">
+        {conditionStyle.hasShimmer ? (
+          <span 
+            className="relative px-3 py-1 rounded-md text-xs font-normal uppercase overflow-hidden inline-block"
+            style={{ 
+              backgroundColor: conditionStyle.bgColor, 
+              color: conditionStyle.textColor 
+            }}
+          >
+            <span className="relative z-10">{product.condition}</span>
+            <span 
+              className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              style={{ animationDuration: '2s', animationIterationCount: 'infinite' }}
+            ></span>
+          </span>
+        ) : (
+          <span 
+            className="px-3 py-1 rounded-md text-xs font-normal uppercase"
+            style={{ 
+              backgroundColor: conditionStyle.bgColor, 
+              color: conditionStyle.textColor 
+            }}
+          >
+            {product.condition}
+          </span>
+        )}
+      </div>
 
-          <div className="mb-2">
-            {conditionStyle.hasShimmer ? (
-              <span 
-                className="relative px-3 py-1 rounded-md text-xs font-normal uppercase overflow-hidden inline-block"
-                style={{ 
-                  backgroundColor: conditionStyle.bgColor, 
-                  color: conditionStyle.textColor 
-                }}
-              >
-                <span className="relative z-10">{product.condition}</span>
-                <span 
-                  className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  style={{ animationDuration: '2s', animationIterationCount: 'infinite' }}
-                ></span>
-              </span>
-            ) : (
-              <span 
-                className="px-3 py-1 rounded-md text-xs font-normal uppercase"
-                style={{ 
-                  backgroundColor: conditionStyle.bgColor, 
-                  color: conditionStyle.textColor 
-                }}
-              >
-                {product.condition}
-              </span>
-            )}
-          </div>
+      <div className="flex items-center gap-2 flex-wrap">
+        {product.year && (
+          <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+            {product.year}
+          </span>
+        )}
+        {product.screenSize && (
+          <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+            {product.screenSize}
+          </span>
+        )}
+        {product.ram && (
+          <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+            {product.ram}
+          </span>
+        )}
+        {product.memory && (
+          <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+            {product.memory}
+          </span>
+        )}
+        {product.accessories && (
+          <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+            Accessories
+          </span>
+        )}
+      </div>
+    </div>
 
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            {product.year && (
-              <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-                {product.year}
-              </span>
-            )}
-            {product.screenSize && (
-              <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-                {product.screenSize}
-              </span>
-            )}
-            {product.ram && (
-              <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-                {product.ram}
-              </span>
-            )}
-            {product.memory && (
-              <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-                {product.memory}
-              </span>
-            )}
-            {product.accessories && (
-  <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-    Accessories
-  </span>
-)}
-          </div>
+    {/* Right side - Price and button (mobile only) */}
+    <div className="md:hidden flex flex-col items-end justify-start flex-shrink-0">
+      <p className="text-xs text-gray-500 uppercase mb-1">PRICE</p>
+      {product.originalPrice && product.originalPrice !== product.price && (
+        <p className="text-sm text-gray-500 line-through">${product.originalPrice.toFixed(2)}</p>
+      )}
+      <p className="text-2xl font-bold text-gray-900 mb-3">${product.price.toFixed(2)}</p>
+      
+      <a 
+        href={`sms:+1234567890?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+        onClick={(e) => e.stopPropagation()}
+        className="bg-[#1f2937] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap text-center w-full"
+      >
+        Buy Now
+      </a>
+    </div>
+  </div>
 
-          <div className="mb-2 flex-grow">
-  <p className="text-base text-gray-600 leading-relaxed line-clamp-3">
-    {product.description}
-  </p>
-  <button 
-  onClick={(e) => {
-    e.stopPropagation();
-    if (cardRef.current) {
-      setCardRect(cardRef.current.getBoundingClientRect());
-    }
-    setShowDetailsModal(true);
-  }}
-  className="text-sm text-gray-600 hover:underline font-semibold mt-1"
->
-  Read more
-</button>
-</div>
+  {/* Description - hidden on mobile */}
+  <div className="mt-3 hidden md:block">
+    <p className="text-base text-gray-600 leading-relaxed line-clamp-3">
+      {product.description}
+    </p>
+    <button className="text-base text-gray-600 hover:underline font-semibold mt-1">
+      Read more
+    </button>
+  </div>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-auto gap-2">
-  <div>
-  <p className="text-xs text-gray-500 uppercase mb-0.5">Price</p>
-  <div className="flex items-center gap-2">
-    {product.originalPrice && product.originalPrice !== product.price && (
-      <p className="text-sm text-gray-500 line-through">${product.originalPrice.toFixed(2)}</p>
-    )}
-    <p className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+  {/* Desktop price and button */}
+  <div className="hidden md:flex items-center justify-between mt-auto pt-4" onClick={(e) => e.stopPropagation()}>
+    <div>
+      <p className="text-xs text-gray-500 uppercase mb-0.5">Price</p>
+      <div className="flex items-center gap-2">
+        {product.originalPrice && product.originalPrice !== product.price && (
+          <p className="text-sm text-gray-500 line-through">${product.originalPrice.toFixed(2)}</p>
+        )}
+        <p className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+      </div>
+    </div>
+    <a 
+      href={`sms:+1234567890?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+      onClick={(e) => e.stopPropagation()}
+      className="bg-[#1f2937] text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap text-center"
+    >
+      Buy Now
+    </a>
   </div>
 </div>
-  <a 
-  href={`sms:+17868637769?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
-  onClick={(e) => e.stopPropagation()}
-  className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap flex-shrink-0 text-center"
->
-  Buy Now
-</a>
-</div>
-        </div>
       </div>
 
       {isLightboxOpen && (
@@ -376,7 +391,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
       <img
         src={images[currentImageIndex]}
         alt={`${product.name} - Image ${currentImageIndex + 1}`}
-        className="w-full h-full object-contain"
+        className="absolute inset-0 w-full h-full object-cover md:object-contain"
       />
       
       {hasMultipleImages && (
