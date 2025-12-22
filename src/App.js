@@ -262,11 +262,13 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     <p className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
   </div>
 </div>
-  <button
-   
-  className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#1f2937] transition-colors duration-200 whitespace-nowrap flex-shrink-0">
-    Buy Now
-  </button>
+  <a 
+  href={`sms:+13057814612?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+  onClick={(e) => e.stopPropagation()}
+  className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap flex-shrink-0 text-center"
+>
+  Buy Now
+</a>
 </div>
         </div>
       </div>
@@ -445,9 +447,9 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 
       <div className="mb-6 pb-6 border-b border-gray-200">
         {product.originalPrice && product.originalPrice !== product.price && (
-          <p className="text-xl text-gray-400 line-through mb-1">${product.originalPrice.toFixed(2)}</p>
+          <p className="text-lg text-gray-400 line-through mb-1">${product.originalPrice.toFixed(2)}</p>
         )}
-        <p className="text-5xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+        <p className="text-3xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
       </div>
 
       <div className="mb-6 pb-6 border-b border-gray-200">
@@ -506,9 +508,12 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
         </div>
       </div>
 
-      <button className="w-full bg-[#1f2937] text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#1f2937] transition-all duration-200 shadow-lg hover:shadow-xl mt-auto">
-        Buy Now
-      </button>
+      <a 
+  href={`sms:+13057814612?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+  className="w-full bg-[#1f2937] text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#374151] transition-all duration-200 shadow-lg hover:shadow-xl mt-auto block text-center"
+>
+  Buy Now
+</a>
     </div>
   </div>
       </div>
@@ -678,7 +683,14 @@ return {
   font-weight: normal;
   font-style: normal;
 }
-  
+  @keyframes scroll-testimonials {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-scroll-testimonials {
+  animation: scroll-testimonials 40s linear infinite;
+  display: flex;
+}
   @keyframes shimmer {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
@@ -729,6 +741,54 @@ return {
         onError={(e) => { e.target.style.display = 'none'; }} 
       />
     </div>
+  </div>
+</div>
+
+{/* Scrolling Testimonials Strip */}
+<div className="bg-white border-b border-gray-200 py-3 overflow-hidden relative">
+  <div className="flex animate-scroll-testimonials whitespace-nowrap">
+    {[...Array(2)].map((_, setIndex) => (
+      <div key={setIndex} className="flex">
+
+        <div className="flex items-center mx-8 gap-3">
+  <span className="text-gray-700 text-sm">"Amazing quality! Exactly as described." - Sarah M.</span>
+  <div className="flex text-yellow-400">
+    {'★'.repeat(5)}
+  </div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/2560px-EBay_logo.svg.png" alt="eBay" className="h-4 flex-shrink-0" />
+</div>
+        
+        <div className="flex items-center mx-8 gap-3">
+                    <span className="text-gray-700 text-sm">"Fast shipping and great prices!" - John D.</span>
+<div className="flex text-yellow-400 mr-2">
+            {'★'.repeat(5)}
+          </div>
+          <img src="/images/offerup-logo.png" alt="OfferUp" className="h-4 flex-shrink-0" />
+        </div>
+        
+        <div className="flex items-center mx-8 gap-3">
+                    <span className="text-gray-700 text-sm">"Best deals I've found anywhere." - Mike R.</span>
+<div className="flex text-yellow-400 mr-2">
+            {'★'.repeat(5)}
+          </div>
+        </div>
+        
+        <div className="flex items-center mx-8 gap-3">
+  <span className="text-gray-700 text-sm">"Trustworthy seller, will buy again!" - Lisa K.</span>
+  <div className="flex text-yellow-400">
+    {'★'.repeat(5)}
+  </div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/2560px-EBay_logo.svg.png" alt="eBay" className="h-4 flex-shrink-0" />
+</div>
+        
+        <div className="flex items-center mx-8 gap-3">
+                    <span className="text-gray-700 text-sm">"Product looks brand new!" - David P.</span>
+<div className="flex text-yellow-400 mr-2">
+            {'★'.repeat(5)}
+          </div>
+          <img src="/images/offerup-logo.png" alt="OfferUp" className="h-4 ml-4 flex-shrink-0" />        </div>
+      </div>
+    ))}
   </div>
 </div>
 
@@ -847,7 +907,8 @@ return {
           </div>
         </div>
       </header>
-
+      
+      
       <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {showSavedOnly && filteredProducts.length === 0 ? (
           <div className="text-center py-20">
