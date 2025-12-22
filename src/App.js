@@ -7,7 +7,7 @@ const icons = {
   screenSize: '/images/full-screen.png',
   ram: '/images/brain.png',
   memory: '/images/floppy-disk.png',
-  boxCharger: '/images/phone-charger.png'
+  accessories: '/images/phone-charger.png'
 };
 
 const ProductCard = ({ product, onToggleSave, isSaved }) => {
@@ -93,7 +93,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     <>
 <div 
   ref={cardRef} 
-  className={`relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave cursor-pointer ${showDetailsModal ? 'opacity-0' : ''}`}
+  className={`relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave cursor-pointer ${showDetailsModal ? 'opacity-0' : ''}`}
   onClick={(e) => {
     if (cardRef.current) {
       setCardRect(cardRef.current.getBoundingClientRect());
@@ -102,14 +102,15 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
   }}
 >
 <div 
-  className="relative bg-gray-100 overflow-hidden group md:rounded-t-lg rounded-l-lg cursor-pointer w-1/2 md:w-full flex-shrink-0" 
+  className="relative overflow-hidden group cursor-pointer w-1/2 md:w-full flex-shrink-0" 
   style={{ paddingBottom: '100%' }}
   onTouchStart={onTouchStart}
   onTouchMove={onTouchMove}
   onTouchEnd={onTouchEnd}
   onClick={(e) => {
     e.stopPropagation();
-    openLightbox(currentImageIndex);
+    setShowDetailsModal(false);
+    setTimeout(() => openLightbox(currentImageIndex), 100);
   }}
 >
           <div 
@@ -226,11 +227,11 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
                 {product.memory}
               </span>
             )}
-            {product.boxCharger && product.boxCharger.toLowerCase() === 'yes' && (
-              <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
-                Box & Charger
-              </span>
-            )}
+            {product.accessories && (
+  <span className="bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-md text-xs font-normal">
+    Accessories
+  </span>
+)}
           </div>
 
           <div className="mb-2 flex-grow">
@@ -263,7 +264,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 </div>
   <button
    
-  className="bg-gray-900 text-white px-4 md:px-6 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-semibold hover:bg-gray-800 transition-colors duration-200 whitespace-nowrap flex-shrink-0">
+  className="bg-[#1f2937] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold hover:bg-[#1f2937] transition-colors duration-200 whitespace-nowrap flex-shrink-0">
     Buy Now
   </button>
 </div>
@@ -348,131 +349,168 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     >
       <div style={{ opacity: 0, animation: 'fadeInContent 0.3s ease-out 0.2s forwards' }}>
         <button
-          onClick={() => {
-            setShowDetailsModal(false);
-            setCardRect(null);
-          }}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10 bg-white rounded-full p-1 shadow-md"
-        >
-          <X size={24} />
-        </button>
-        
-        <div className="p-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 pr-8">{product.name}</h2>
+    onClick={() => {
+      setShowDetailsModal(false);
+      setCardRect(null);
+    }}
+    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10 bg-white rounded-full p-2 shadow-md"
+  >
+    <X size={24} />
+  </button>
+  
+  <div className="flex flex-col md:flex-row gap-6 p-6">
+    <div className="md:w-1/2">
+  <div className="bg-white bg-opacity-20 backdrop-blur-md p-4 rounded-xl sticky top-6 border border-white border-opacity-30 shadow-lg">
+    {/* Main Image */}
+    <div 
+      className="relative overflow-hidden group cursor-pointer mb-3" 
+      style={{ height: '450px' }}
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowDetailsModal(false);
+        setTimeout(() => openLightbox(currentImageIndex), 100);
+      }}
+    >
+      <img
+        src={images[currentImageIndex]}
+        alt={`${product.name} - Image ${currentImageIndex + 1}`}
+        className="w-full h-full object-contain"
+      />
+      
+      {hasMultipleImages && (
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImage(e);
+            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:scale-110 z-10"
+          >
+            <ChevronLeft className="text-white drop-shadow-lg" size={32} strokeWidth={2.5} />
+          </button>
           
-          <div className="space-y-4">
-            <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-4 shadow-md">
-              <div className="relative bg-gray-100 rounded-xl overflow-hidden group" style={{ height: '400px' }}>
-                <img
-                  src={images[currentImageIndex]}
-                  alt={`${product.name} - Image ${currentImageIndex + 1}`}
-                  className="w-full h-full object-contain"
-                />
-                
-                {hasMultipleImages && (
-                  <>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        prevImage(e);
-                      }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 z-10"
-                    >
-                      <ChevronLeft className="text-gray-800" size={24} />
-                    </button>
-                    
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        nextImage(e);
-                      }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 z-10"
-                    >
-                      <ChevronRight className="text-gray-800" size={24} />
-                    </button>
-
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1.5">
-                      {images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(index);
-                          }}
-                          className={`h-2 rounded-full transition-all duration-200 ${
-                            index === currentImageIndex ? 'bg-gray-800 w-6' : 'bg-gray-400 w-2'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-5 shadow-md">
-              <h3 className="font-bold text-lg text-gray-800 mb-3">Description</h3>
-              <p className="text-gray-700 leading-relaxed">{product.description}</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-5 shadow-md">
-                <h3 className="font-bold text-lg text-gray-800 mb-3">Specifications</h3>
-                <div className="space-y-2.5 text-sm">
-                  {product.condition && (
-                    <p className="flex items-center">
-                      <img src={icons.condition} alt="Condition" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">Condition:</span> <span className="ml-1 text-gray-600">{product.condition}</span>
-                    </p>
-                  )}
-                  {product.year && (
-                    <p className="flex items-center">
-                      <img src={icons.year} alt="Year" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">Year:</span> <span className="ml-1 text-gray-600">{product.year}</span>
-                    </p>
-                  )}
-                  {product.screenSize && (
-                    <p className="flex items-center">
-                      <img src={icons.screenSize} alt="Screen Size" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">Screen Size:</span> <span className="ml-1 text-gray-600">{product.screenSize}</span>
-                    </p>
-                  )}
-                  {product.ram && (
-                    <p className="flex items-center">
-                      <img src={icons.ram} alt="RAM" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">RAM:</span> <span className="ml-1 text-gray-600">{product.ram}</span>
-                    </p>
-                  )}
-                  {product.memory && (
-                    <p className="flex items-center">
-                      <img src={icons.memory} alt="Memory" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">Memory:</span> <span className="ml-1 text-gray-600">{product.memory}</span>
-                    </p>
-                  )}
-                  {product.boxCharger && (
-                    <p className="flex items-center">
-                      <img src={icons.boxCharger} alt="Box & Charger" className="w-4 h-4 mr-2 opacity-70" />
-                      <span className="font-medium text-gray-700">Box & Charger:</span> <span className="ml-1 text-gray-600">{product.boxCharger}</span>
-                    </p>
-                  )}
-                </div>
-              </div>
-              
-              <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-2xl p-5 shadow-md flex flex-col justify-between">
-                <div>
-  <h3 className="font-bold text-lg text-gray-800 mb-3">Price</h3>
-  {product.originalPrice && product.originalPrice !== product.price && (
-    <p className="text-lg text-gray-500 line-through mb-1">${product.originalPrice.toFixed(2)}</p>
-  )}
-  <p className="text-4xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImage(e);
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:scale-110 z-10"
+          >
+            <ChevronRight className="text-white drop-shadow-lg" size={32} strokeWidth={2.5} />
+          </button>
+        </>
+      )}
+    </div>
+    
+    {/* Thumbnails */}
+    {hasMultipleImages && (
+      <div className="flex gap-2 overflow-x-auto pb-2">
+        {images.map((image, index) => (
+          <button
+            key={index}
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentImageIndex(index);
+            }}
+            className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+              index === currentImageIndex ? 'border-white' : 'border-gray-600 opacity-60 hover:opacity-100'
+            }`}
+          >
+            <img
+              src={image}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
 </div>
-                <button className="mt-6 w-full bg-gray-900 text-white px-6 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-all duration-200 shadow-lg hover:shadow-xl">
-                  Buy Now
-                </button>
+
+    <div className="md:w-1/2 flex flex-col">
+      <h2 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h2>
+      
+      <div className="mb-4">
+        <span 
+          className="px-4 py-2 rounded-lg text-sm font-semibold uppercase"
+          style={{ 
+            backgroundColor: conditionStyle.bgColor, 
+            color: conditionStyle.textColor 
+          }}
+        >
+          {product.condition}
+        </span>
+      </div>
+
+      <div className="mb-6 pb-6 border-b border-gray-200">
+        {product.originalPrice && product.originalPrice !== product.price && (
+          <p className="text-xl text-gray-400 line-through mb-1">${product.originalPrice.toFixed(2)}</p>
+        )}
+        <p className="text-5xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+      </div>
+
+      <div className="mb-6 pb-6 border-b border-gray-200">
+        <h3 className="font-bold text-lg text-gray-800 mb-2">Description</h3>
+        <p className="text-gray-700 leading-relaxed">{product.description}</p>
+      </div>
+      
+      <div className="mb-6">
+        <h3 className="font-bold text-lg text-gray-800 mb-3">Specifications</h3>
+        <div className="grid grid-cols-2 gap-3">
+          {product.year && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <img src={icons.year} alt="Year" className="w-5 h-5 opacity-60" />
+              <div>
+                <p className="text-xs text-gray-500">Year</p>
+                <p className="font-semibold text-gray-800">{product.year}</p>
               </div>
             </div>
-          </div>
+          )}
+          {product.screenSize && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <img src={icons.screenSize} alt="Screen" className="w-5 h-5 opacity-60" />
+              <div>
+                <p className="text-xs text-gray-500">Screen Size</p>
+                <p className="font-semibold text-gray-800">{product.screenSize}</p>
+              </div>
+            </div>
+          )}
+          {product.ram && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <img src={icons.ram} alt="RAM" className="w-5 h-5 opacity-60" />
+              <div>
+                <p className="text-xs text-gray-500">RAM</p>
+                <p className="font-semibold text-gray-800">{product.ram}</p>
+              </div>
+            </div>
+          )}
+          {product.memory && (
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+              <img src={icons.memory} alt="Memory" className="w-5 h-5 opacity-60" />
+              <div>
+                <p className="text-xs text-gray-500">Memory</p>
+                <p className="font-semibold text-gray-800">{product.memory}</p>
+              </div>
+            </div>
+          )}
+          {product.accessories && (
+  <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg col-span-2">
+    <img src={icons.accessories} alt="Accessories" className="w-5 h-5 opacity-60 flex-shrink-0 mt-0.5" />
+    <div className="flex-1 min-w-0">
+      <p className="text-xs text-gray-500">Accessories</p>
+      <p className="font-semibold text-gray-800 break-words">{product.accessories}</p>
+    </div>
+  </div>
+)}
         </div>
+      </div>
+
+      <button className="w-full bg-[#1f2937] text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-[#1f2937] transition-all duration-200 shadow-lg hover:shadow-xl mt-auto">
+        Buy Now
+      </button>
+    </div>
+  </div>
       </div>
     </div>
   </div>
@@ -520,20 +558,34 @@ const AirtableStore = () => {
       const formattedProducts = data.records.map(record => {
         const imageField = record.fields.Image || record.fields.image || [];
         const images = imageField.map(img => img.url);
-        return {
-          id: record.id,
-          name: record.fields.Name || record.fields.name || 'Unnamed Product',
-          price: parseFloat(record.fields['Current Price'] || record.fields.currentPrice || record.fields.Price || record.fields.price || 0),
-          originalPrice: record.fields['Starting Price'] || record.fields.startingPrice ? parseFloat(record.fields['Starting Price'] || record.fields.startingPrice) : null,
-          description: record.fields.Description || record.fields.description || '',
-          images: images.length > 0 ? images : ['https://via.placeholder.com/400x400?text=No+Image'],
-          condition: record.fields.Condition || record.fields.condition || 'Unknown',
-          year: record.fields.Year || record.fields.year || '',
-          screenSize: record.fields['Screen Size'] || record.fields.screenSize || record.fields.screen_size || '',
-          ram: record.fields.Ram || record.fields.RAM || record.fields.ram || '',
-          memory: record.fields.Memory || record.fields.memory || '',
-          boxCharger: record.fields['Box & Charger'] || record.fields.boxCharger || record.fields.box_charger || '',
-        };
+        // Parse specifications field
+const specsText = record.fields.Specifications || record.fields.specifications || '';
+const specs = {};
+
+if (specsText) {
+  specsText.split('\n').forEach(line => {
+    const [key, value] = line.split(':').map(s => s.trim());
+    if (key && value) {
+      const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
+      specs[normalizedKey] = value;
+    }
+  });
+}
+
+return {
+  id: record.id,
+  name: record.fields.Name || record.fields.name || 'Unnamed Product',
+  price: parseFloat(record.fields['Current Price'] || record.fields.currentPrice || record.fields.Price || record.fields.price || 0),
+  originalPrice: record.fields['Starting Price'] || record.fields.startingPrice ? parseFloat(record.fields['Starting Price'] || record.fields.startingPrice) : null,
+  description: record.fields.Description || record.fields.description || '',
+  condition: record.fields.Condition || record.fields.condition || 'Good',
+  year: specs.year || '',
+  screenSize: specs.screensize || '',
+  ram: specs.ram || '',
+  memory: specs.memory || '',
+  accessories: specs.accessories || specs.boxandcharger || '',
+  images: images
+};
       });
       setProducts(formattedProducts);
       setLoading(false);
@@ -693,7 +745,7 @@ const AirtableStore = () => {
   {savedProducts.length > 0 && !showSavedOnly && <span className="bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">{savedProducts.length}</span>}
 </button>
             <div className="relative">
-              <button onClick={() => setFilterOpen(!filterOpen)} className={`flex items-center p-3 rounded-full font-semibold transition-all duration-200 relative ${filterOpen || activeFiltersCount > 0 ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+              <button onClick={() => setFilterOpen(!filterOpen)} className={`flex items-center p-3 rounded-full font-semibold transition-all duration-200 relative ${filterOpen || activeFiltersCount > 0 ? 'bg-[#1f2937] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
                 <SlidersHorizontal size={20} />
                 {activeFiltersCount > 0 && <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">{activeFiltersCount}</span>}
               </button>
@@ -802,7 +854,7 @@ const AirtableStore = () => {
             <Heart size={64} className="mx-auto text-gray-300 mb-4" />
             <h3 className="text-2xl font-bold text-gray-800 mb-2">No saved products yet</h3>
             <p className="text-gray-600">Click the heart icon on products to save them here</p>
-            <button onClick={() => setShowSavedOnly(false)} className="mt-6 bg-gray-900 text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-200">Browse Products</button>
+            <button onClick={() => setShowSavedOnly(false)} className="mt-6 bg-[#1f2937] text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors duration-200">Browse Products</button>
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20">
