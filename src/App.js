@@ -605,7 +605,7 @@ const AirtableStore = () => {
   }
 
   return (
-<div className="min-h-screen bg-white" style={{fontFamily: "'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"}}>      <style>{`
+<div className="min-h-screen bg-gray-50" style={{fontFamily: "'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"}}>      <style>{`
   @font-face {
     font-family: 'Cal Sans';
     src: url('/fonts/CalSans-Regular.ttf') format('truetype');
