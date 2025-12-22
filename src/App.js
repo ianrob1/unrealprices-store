@@ -607,11 +607,11 @@ const AirtableStore = () => {
   return (
 <div className="min-h-screen bg-gray-50" style={{fontFamily: "'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"}}>      <style>{`
   @font-face {
-    font-family: 'Cal Sans';
-    src: url('/fonts/CalSans-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'Archivo';
+  src: url('/fonts/Archivo-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
   
   @keyframes shimmer {
     0% { transform: translateX(-100%); }
@@ -637,13 +637,34 @@ const AirtableStore = () => {
   @keyframes fadeInContent {
     to { opacity: 1; }
   }
-    @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-}
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes wave {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  .card-wave::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+  .card-wave:hover::before {
+    left: 100%;
+  }
+  .card-wave:hover {
+    animation: wave 0.6s ease-in-out;
+  }
 `}</style>
 
       <div className="bg-gradient-to-r from-gray-900 to-gray-800">
