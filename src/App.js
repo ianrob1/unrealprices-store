@@ -93,7 +93,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
     <>
 <div 
   ref={cardRef} 
-  className={`relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex-col flex-row h-full card-wave cursor-pointer ${showDetailsModal ? 'opacity-0' : ''}`}
+  className={`relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex md:flex flex-col h-full card-wave cursor-pointer ${showDetailsModal ? 'opacity-0' : ''}`}
   onClick={(e) => {
     if (cardRef.current) {
       setCardRect(cardRef.current.getBoundingClientRect());
@@ -102,7 +102,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
   }}
 >
 <div 
-  className="relative overflow-hidden group cursor-pointer w-1/2 md:w-full flex-shrink-0" 
+  className="relative overflow-hidden group cursor-pointer w-full flex-shrink-0" 
   style={{ paddingBottom: '100%' }}
   onTouchStart={onTouchStart}
   onTouchMove={onTouchMove}
