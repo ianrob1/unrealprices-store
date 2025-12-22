@@ -176,7 +176,15 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
         </div>
 
         <div className="p-3 md:p-4 flex flex-col h-full w-1/2 md:w-full" style={{ minHeight: '280px' }}>
-          <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
+          <div className="flex justify-between items-start mb-2">
+  <h3 className="text-lg md:text-xl font-semibold text-gray-900 flex-1 pr-2">{product.name}</h3>
+  <div className="md:hidden flex-shrink-0">
+    {product.originalPrice && product.originalPrice !== product.price && (
+      <p className="text-xs text-gray-500 line-through text-right">${product.originalPrice.toFixed(2)}</p>
+    )}
+    <p className="text-lg font-bold text-gray-900 whitespace-nowrap">${product.price.toFixed(2)}</p>
+  </div>
+</div>
 
           <div className="mb-2">
             {conditionStyle.hasShimmer ? (
@@ -252,7 +260,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
 </button>
 </div>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-auto gap-2">
+          <div className="hidden md:flex flex-col md:flex-row md:items-center md:justify-between mt-auto gap-2">
   <div>
   <p className="text-xs text-gray-500 uppercase mb-0.5">Price</p>
   <div className="flex items-center gap-2">
