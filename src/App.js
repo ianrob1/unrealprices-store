@@ -643,27 +643,26 @@ const AirtableStore = () => {
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
-  @keyframes wave {
-    0% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-8px) scale(1.02); }
-    100% { transform: translateY(0) scale(1); }
-  }
-  .card-wave::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s;
-  }
-  .card-wave:hover::before {
-    left: 100%;
-  }
-  .card-wave:hover {
-    animation: wave 0.6s ease-in-out;
-  }
+  .card-wave {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+  z-index: 1;
+}
+.card-wave:hover::before {
+  left: 100%;
+}
+.card-wave:hover {
+  transform: translateY(-8px) scale(1.02);
+}
 `}</style>
 
       <div className="bg-gradient-to-r from-gray-900 to-gray-800">
