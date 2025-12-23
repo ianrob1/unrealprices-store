@@ -1062,7 +1062,7 @@ return {
           />
         </div>
         <a 
-          href={`sms:+1234567890?body=Product: ${encodeURIComponent(sellProduct)}%0ACondition: ${encodeURIComponent(sellCondition)}%0AAccessories: ${encodeURIComponent(sellAccessories)}%0AAsking Price: ${encodeURIComponent(sellPrice)}`}
+          href={`sms:+17868637769?body=Product: ${encodeURIComponent(sellProduct)}%0ACondition: ${encodeURIComponent(sellCondition)}%0AAccessories: ${encodeURIComponent(sellAccessories)}%0AAsking Price: ${encodeURIComponent(sellPrice)}`}
           className="block w-full bg-[#1f2937] text-white px-6 py-3 rounded-xl text-center font-bold hover:bg-[#374151] transition-colors"
         >
           Submit
