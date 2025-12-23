@@ -791,7 +791,7 @@ return {
       <img 
         src="/images/logo.png" 
         alt="UnrealPrices Logo" 
-        className="h-40 w-40 object-contain animate-float" 
+        className="h-80 w-80 object-contain animate-float" 
         style={{ filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.2))' }}
         onError={(e) => { e.target.style.display = 'none'; }} 
       />
