@@ -560,6 +560,8 @@ const AirtableStore = () => {
   const [sellAccessories, setSellAccessories] = useState('');
   const [sellPrice, setSellPrice] = useState('');
   const [hasOpenedForm, setHasOpenedForm] = useState(false);
+  const [sellButtonFaded, setSellButtonFaded] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
   
 
   const AIRTABLE_API_KEY = 'patBxMl5uxbqMh90l.d0fa8c39cd2baed95b4d5f47cfa963e3374a2fbe8999edc690dc7a35bc6d8feb';
@@ -567,6 +569,14 @@ const AirtableStore = () => {
   const AIRTABLE_TABLE_NAME = 'Inventory';
 
   const conditions = ['Brand New', 'Excellent', 'Good', 'Fair'];
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowLogo(true);
+  }, 6000); // 4 texts × 2 seconds each = 8 seconds
+  return () => clearTimeout(timer);
+}, []);
+
 
   useEffect(() => {
     fetchProducts();
@@ -786,7 +796,7 @@ return {
 `}</style>
 
       <div className="bg-gradient-to-r from-gray-900 to-gray-800">
-  <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+  <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 relative">
     <div className="flex justify-center">
       <img 
         src="/images/logo.png" 
@@ -796,56 +806,37 @@ return {
         onError={(e) => { e.target.style.display = 'none'; }} 
       />
     </div>
+    
+    {/* Social Media Links - Bottom Right */}
+    <div className="absolute bottom-6 right-6 flex items-center gap-4">
+      <a 
+        href="https://www.facebook.com/marketplace/profile/1078423229/?ref=permalink&mibextid=6ojiHh"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:opacity-70 transition-opacity"
+      >
+        <img src="/images/facebook-logo.png" alt="Facebook" className="w-8 h-8" />
+      </a>
+      <a 
+        href="https://www.instagram.com/unrealprices/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:opacity-70 transition-opacity"
+      >
+        <img src="/images/instagram-logo.png" alt="Instagram" className="w-14 h-14" />
+      </a>
+      <a 
+        href="https://offerup.com/profile/unreal-prices"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:opacity-70 transition-opacity"
+      >
+        <img src="/images/offerup-logo.png" alt="OfferUp" className="w-20 h-18 object-contain" />
+      </a>
+    </div>
   </div>
 </div>
 
-{/* Scrolling Testimonials Strip */}
-<div className="bg-white border-b border-gray-200 py-3 overflow-hidden relative">
-  <div className="flex animate-scroll-testimonials whitespace-nowrap">
-    {[...Array(2)].map((_, setIndex) => (
-      <div key={setIndex} className="flex">
-
-        <div className="flex items-center mx-8 gap-3">
-  <span className="text-gray-700 text-sm">"Amazing quality! Exactly as described." - Sarah M.</span>
-  <div className="flex text-yellow-400">
-    {'★'.repeat(5)}
-  </div>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/2560px-EBay_logo.svg.png" alt="eBay" className="h-4 flex-shrink-0" />
-</div>
-        
-        <div className="flex items-center mx-8 gap-3">
-                    <span className="text-gray-700 text-sm">"Fast shipping and great prices!" - John D.</span>
-<div className="flex text-yellow-400 mr-2">
-            {'★'.repeat(5)}
-          </div>
-          <img src="/images/offerup-logo.png" alt="OfferUp" className="h-4 flex-shrink-0" />
-        </div>
-        
-        <div className="flex items-center mx-8 gap-3">
-                    <span className="text-gray-700 text-sm">"Best deals I've found anywhere." - Mike R.</span>
-<div className="flex text-yellow-400 mr-2">
-            {'★'.repeat(5)}
-          </div>
-        </div>
-        
-        <div className="flex items-center mx-8 gap-3">
-  <span className="text-gray-700 text-sm">"Trustworthy seller, will buy again!" - Lisa K.</span>
-  <div className="flex text-yellow-400">
-    {'★'.repeat(5)}
-  </div>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/2560px-EBay_logo.svg.png" alt="eBay" className="h-4 flex-shrink-0" />
-</div>
-        
-        <div className="flex items-center mx-8 gap-3">
-                    <span className="text-gray-700 text-sm">"Product looks brand new!" - David P.</span>
-<div className="flex text-yellow-400 mr-2">
-            {'★'.repeat(5)}
-          </div>
-          <img src="/images/offerup-logo.png" alt="OfferUp" className="h-4 ml-4 flex-shrink-0" />        </div>
-      </div>
-    ))}
-  </div>
-</div>
 
 <header className="bg-white bg-opacity-95 backdrop-blur-sm shadow-sm sticky top-0 z-40 border-b border-gray-200">
   <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
@@ -877,6 +868,7 @@ return {
                         </button>
                       )}
                     </div>
+                  
 
                     {/* Condition */}
                     <div className="mb-3">
