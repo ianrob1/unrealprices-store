@@ -995,7 +995,7 @@ return {
       <img 
         src="/images/lookingtosell.png" 
         alt="Looking to Sell?" 
-        className="relative w-64 h-64 hover:scale-110 transition-transform duration-200 drop-shadow-2xl"
+        className="relative w-48 h-48 hover:scale-110 transition-transform duration-200 drop-shadow-2xl"
       />
     </button>
   </div>
@@ -1081,7 +1081,7 @@ return {
     <img 
       src="/images/lookingtosell.png" 
       alt="Sell" 
-      className="w-16 h-16 hover:scale-110 transition-transform drop-shadow-lg"
+      className="w-32 h-32 hover:scale-110 transition-transform drop-shadow-lg"
     />
   </button>
 )}
