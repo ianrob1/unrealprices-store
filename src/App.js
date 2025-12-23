@@ -247,7 +247,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
       <p className="text-2xl font-bold text-gray-900 mb-3">${product.price.toFixed(2)}</p>
       
       <a 
-        href={`sms:+1234567890?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+        href={`sms:+17868637769?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
         onClick={(e) => e.stopPropagation()}
         className="bg-[#1f2937] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap text-center w-full"
       >
@@ -278,7 +278,7 @@ const ProductCard = ({ product, onToggleSave, isSaved }) => {
       </div>
     </div>
     <a 
-      href={`sms:+1234567890?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
+      href={`sms:+17868637769?body=Hello, I'm interested in the ${encodeURIComponent(product.name)}`}
       onClick={(e) => e.stopPropagation()}
       className="bg-[#1f2937] text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#374151] transition-colors duration-200 whitespace-nowrap text-center"
     >
@@ -553,6 +553,13 @@ const AirtableStore = () => {
   const [selectedScreenSize, setSelectedScreenSize] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [yearRange, setYearRange] = useState({ min: '', max: '' });
+  const [showSellPopup, setShowSellPopup] = useState(false);
+  const [showSellForm, setShowSellForm] = useState(false);
+  const [sellProduct, setSellProduct] = useState('');
+  const [sellCondition, setSellCondition] = useState('Brand New');
+  const [sellAccessories, setSellAccessories] = useState('');
+  const [sellPrice, setSellPrice] = useState('');
+  
 
   const AIRTABLE_API_KEY = 'patBxMl5uxbqMh90l.d0fa8c39cd2baed95b4d5f47cfa963e3374a2fbe8999edc690dc7a35bc6d8feb';
   const AIRTABLE_BASE_ID = 'appRMrTPEDmjy6Zka';
@@ -565,6 +572,18 @@ const AirtableStore = () => {
     const saved = localStorage.getItem('savedProducts');
     if (saved) setSavedProducts(JSON.parse(saved));
   }, []);
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowSellPopup(true);
+  }, 5000);
+  return () => clearTimeout(timer);
+}, []);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowSellPopup(true);
+  }, 5000);
+  return () => clearTimeout(timer);
+}, []);
 
   const fetchProducts = async () => {
     try {
@@ -713,6 +732,26 @@ return {
   .animate-shimmer {
     animation: shimmer 2s infinite;
   }
+@keyframes slideInBounce {
+  0% {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-30px);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.animate-slideInBounce {
+  animation: slideInBounce 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
   @keyframes fadeInBg {
     to { background-color: rgba(0, 0, 0, 0.5); }
   }
@@ -945,6 +984,86 @@ return {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 {filteredProducts.map(product => <ProductCard key={product.id} product={product} onToggleSave={toggleSaveProduct} isSaved={savedProducts.includes(product.id)} />)}
 </div>
+)}
+
+{showSellPopup && (
+  <div className="fixed bottom-6 right-6 z-50">
+    {!showSellForm ? (
+      <button onClick={() => setShowSellForm(true)} className="relative group animate-slideInBounce">
+  <div className="absolute -inset-4 bg-black opacity-30 blur-xl rounded-full"></div>
+  <img 
+    src="/images/lookingtosell.png" 
+    alt="Looking to Sell?" 
+    className="relative w-64 h-64 hover:scale-110 transition-transform duration-200 drop-shadow-2xl"
+  />
+</button>
+    ) : (
+      <div className="bg-white rounded-xl shadow-2xl p-6 w-80 border-2 border-[#1f2937]">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-gray-900">Sell Your Item</h3>
+          <button onClick={() => { setShowSellForm(false); setShowSellPopup(false); }} className="text-gray-500 hover:text-gray-700">
+            <X size={24} />
+          </button>
+        </div>
+        <div className="space-y-4">
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-1">Product</label>
+    <input 
+      type="text" 
+      placeholder="e.g., iPhone 15 Pro" 
+      value={sellProduct}
+      onChange={(e) => setSellProduct(e.target.value)}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-1">Condition</label>
+    <select 
+      value={sellCondition}
+      onChange={(e) => setSellCondition(e.target.value)}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+    >
+      <option>Brand New</option>
+      <option>Excellent</option>
+      <option>Good</option>
+      <option>Fair</option>
+    </select>
+  </div>
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-1">Accessories</label>
+    <input 
+      type="text" 
+      placeholder="e.g., Box, Charger" 
+      value={sellAccessories}
+      onChange={(e) => setSellAccessories(e.target.value)}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+    />
+  </div>
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-1">Asking Price</label>
+    <input 
+      type="text" 
+      placeholder="$0.00" 
+      value={sellPrice}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9.]/g, '');
+        setSellPrice(value ? `$${value}` : '');
+      }}
+      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+    />
+  </div>
+  <a 
+    href={`sms:+1234567890?body=Product: ${encodeURIComponent(sellProduct)}%0ACondition: ${encodeURIComponent(sellCondition)}%0AAccessories: ${encodeURIComponent(sellAccessories)}%0AAsking Price: ${encodeURIComponent(sellPrice)}`}
+    className="block w-full bg-[#1f2937] text-white px-6 py-3 rounded-xl text-center font-bold hover:bg-[#374151] transition-colors"
+  >
+    Submit
+  </a>
+</div>
+
+
+      </div>
+    )}
+  </div>
 )}
 </main><footer className="bg-gray-50 border-t border-gray-200 mt-20">
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
