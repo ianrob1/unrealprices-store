@@ -559,6 +559,7 @@ const AirtableStore = () => {
   const [sellCondition, setSellCondition] = useState('Brand New');
   const [sellAccessories, setSellAccessories] = useState('');
   const [sellPrice, setSellPrice] = useState('');
+  const [hasOpenedForm, setHasOpenedForm] = useState(false);
   
 
   const AIRTABLE_API_KEY = 'patBxMl5uxbqMh90l.d0fa8c39cd2baed95b4d5f47cfa963e3374a2fbe8999edc690dc7a35bc6d8feb';
@@ -986,84 +987,103 @@ return {
 </div>
 )}
 
-{showSellPopup && (
+{/* Big button - only shows before first click */}
+{showSellPopup && !hasOpenedForm && (
   <div className="fixed bottom-6 right-6 z-50">
-    {!showSellForm ? (
-      <button onClick={() => setShowSellForm(true)} className="relative group animate-slideInBounce">
-  <div className="absolute -inset-4 bg-black opacity-30 blur-xl rounded-full"></div>
-  <img 
-    src="/images/lookingtosell.png" 
-    alt="Looking to Sell?" 
-    className="relative w-64 h-64 hover:scale-110 transition-transform duration-200 drop-shadow-2xl"
-  />
-</button>
-    ) : (
-      <div className="bg-white rounded-xl shadow-2xl p-6 w-80 border-2 border-[#1f2937]">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-900">Sell Your Item</h3>
-          <button onClick={() => { setShowSellForm(false); setShowSellPopup(false); }} className="text-gray-500 hover:text-gray-700">
-            <X size={24} />
-          </button>
-        </div>
-        <div className="space-y-4">
-  <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-1">Product</label>
-    <input 
-      type="text" 
-      placeholder="e.g., iPhone 15 Pro" 
-      value={sellProduct}
-      onChange={(e) => setSellProduct(e.target.value)}
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
-    />
+    <button onClick={() => { setShowSellForm(true); setHasOpenedForm(true); }} className="relative group animate-slideInBounce">
+      <div className="absolute -inset-4 bg-black opacity-30 blur-xl rounded-full"></div>
+      <img 
+        src="/images/lookingtosell.png" 
+        alt="Looking to Sell?" 
+        className="relative w-64 h-64 hover:scale-110 transition-transform duration-200 drop-shadow-2xl"
+      />
+    </button>
   </div>
-  <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-1">Condition</label>
-    <select 
-      value={sellCondition}
-      onChange={(e) => setSellCondition(e.target.value)}
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-    >
-      <option>Brand New</option>
-      <option>Excellent</option>
-      <option>Good</option>
-      <option>Fair</option>
-    </select>
-  </div>
-  <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-1">Accessories</label>
-    <input 
-      type="text" 
-      placeholder="e.g., Box, Charger" 
-      value={sellAccessories}
-      onChange={(e) => setSellAccessories(e.target.value)}
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
-    />
-  </div>
-  <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-1">Asking Price</label>
-    <input 
-      type="text" 
-      placeholder="$0.00" 
-      value={sellPrice}
-      onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9.]/g, '');
-        setSellPrice(value ? `$${value}` : '');
-      }}
-      className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
-    />
-  </div>
-  <a 
-    href={`sms:+1234567890?body=Product: ${encodeURIComponent(sellProduct)}%0ACondition: ${encodeURIComponent(sellCondition)}%0AAccessories: ${encodeURIComponent(sellAccessories)}%0AAsking Price: ${encodeURIComponent(sellPrice)}`}
-    className="block w-full bg-[#1f2937] text-white px-6 py-3 rounded-xl text-center font-bold hover:bg-[#374151] transition-colors"
-  >
-    Submit
-  </a>
-</div>
+)}
 
-
+{/* Form popup */}
+{showSellForm && (
+  <div className="fixed bottom-6 right-6 z-50">
+    <div className="bg-white rounded-xl shadow-2xl p-6 w-80 border-2 border-[#1f2937]">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-bold text-gray-900">Sell Your Item</h3>
+        <button 
+          onClick={() => setShowSellForm(false)}
+          className="text-gray-500 hover:text-gray-700"
+        >
+          <X size={24} />
+        </button>
       </div>
-    )}
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Product</label>
+          <input 
+            type="text" 
+            placeholder="e.g., iPhone 15 Pro" 
+            value={sellProduct}
+            onChange={(e) => setSellProduct(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Condition</label>
+          <select 
+            value={sellCondition}
+            onChange={(e) => setSellCondition(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+          >
+            <option>Brand New</option>
+            <option>Excellent</option>
+            <option>Good</option>
+            <option>Fair</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Accessories</label>
+          <input 
+            type="text" 
+            placeholder="e.g., Box, Charger" 
+            value={sellAccessories}
+            onChange={(e) => setSellAccessories(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Asking Price</label>
+          <input 
+            type="text" 
+            placeholder="$0.00" 
+            value={sellPrice}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9.]/g, '');
+              setSellPrice(value ? `$${value}` : '');
+            }}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg" 
+          />
+        </div>
+        <a 
+          href={`sms:+1234567890?body=Product: ${encodeURIComponent(sellProduct)}%0ACondition: ${encodeURIComponent(sellCondition)}%0AAccessories: ${encodeURIComponent(sellAccessories)}%0AAsking Price: ${encodeURIComponent(sellPrice)}`}
+          className="block w-full bg-[#1f2937] text-white px-6 py-3 rounded-xl text-center font-bold hover:bg-[#374151] transition-colors"
+        >
+          Submit
+        </a>
+      </div>
+    </div>
   </div>
+)}
+
+{/* Mini persistent button after closing form */}
+{hasOpenedForm && !showSellForm && (
+  <button 
+    onClick={() => setShowSellForm(true)}
+    className="fixed bottom-4 right-4 z-40"
+  >
+    <img 
+      src="/images/lookingtosell.png" 
+      alt="Sell" 
+      className="w-16 h-16 hover:scale-110 transition-transform drop-shadow-lg"
+    />
+  </button>
 )}
 </main><footer className="bg-gray-50 border-t border-gray-200 mt-20">
     <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
