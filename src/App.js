@@ -605,7 +605,12 @@ useEffect(() => {
       if (!response.ok) throw new Error('Failed to fetch products');
       const data = await response.json();
       
-      const formattedProducts = data.records.map(record => {
+      const formattedProducts = data.records
+  .filter(record => {
+    const status = record.fields.Status || record.fields.status;
+    return status === 'Available';
+  })
+  .map(record => {
         const imageField = record.fields.Image || record.fields.image || [];
         const images = imageField.map(img => img.url);
         // Parse specifications field
